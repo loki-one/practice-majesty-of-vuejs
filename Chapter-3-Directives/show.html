@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>SOS</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1 v-show="!message">You must send a message for help!</h1>
+    <textarea v-model="message"></textarea><br>
+    <button v-show="message" class="btn btn-danger">Send word to allies for help!</button>
+    <pre>{{ $data }}</pre>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        message: 'Our king is dead!'
+      }
+    });
+</script>
+</html>
