@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Greetings User</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <template v-if="gender">
+    <h1>
+      Hello,
+      <span v-if="gender === 'male'">Mister</span>
+      <span v-if="gender === 'female'">Miss</span>
+      {{ name }}.
+    </h1>
+    </template>
+    <h2 v-else>So you can't decide. Fine!</h2>
+    <form>
+      <div class="form-group">
+        <label for="inputGender">Enter your gender</label>
+        <input v-model="gender" id="inputGender"  class="form-control" type="text" placeholder="gender">
+      </div>
+      <div class="form-group">
+        <label for="inputName">Enter your name</label>
+        <input v-model="name" id="inputName"  class="form-control" type="text" placeholder="name">
+      </div>
+    </form>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      name: '',
+      gender: ''
+    }
+  });
+</script>
+</html>
