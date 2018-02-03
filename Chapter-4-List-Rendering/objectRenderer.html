@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Rendering Objects using v-for</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Let's hear some stories</h1>
+    <ul class='list-group'>
+      <li class='list-group-item' v-for="(value, key, index) in story">{{ index }} -> {{ key }} : {{ value }}</li>
+    </ul>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        story: {
+          plot: 'Someone ate my chocolate...',
+          writer: 'John',
+          upvotes: 47
+        }
+      }
+    });
+</script>
+</html>
