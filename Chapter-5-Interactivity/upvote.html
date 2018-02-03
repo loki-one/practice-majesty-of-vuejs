@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Click to Upvote!!!</title>
+</head>
+<body>
+  <div id="app" class="container text-center">
+    <button class="btn btn-primary" v-on:click="upvotes++">Upvote! {{ upvotes }}</button>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        upvotes: 0
+      }
+    });
+</script>
+</html>
