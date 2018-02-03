@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Calculator using Event Modifiers</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Type 2 numbers and choose operation.</h1>
+    <form class="form-inline" @submit.prevent="calculate">
+      <input class="form-control" v-model.number="num1" @keyup.enter="calculate">
+      <select class="form-control" v-model="operator" @keyup.enter="calculate">
+        <option>+</option>
+        <option>-</option>
+        <option>*</option>
+        <option>/</option>
+      </select>
+      <input class="form-control" v-model.number="num2">
+      <button type="submit" class="btn btn-primary" @click="calculate">Calculate</button>
+    </form>
+    <h2>Result: {{ num1 }} {{ operator }} {{ num2 }} = {{ result }}</h2>
+    <pre>{{ $data }}</pre>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        num1: 0,
+        num2: 0,
+        result: null,
+        operator: "+"
+      },
+      methods: {
+        calculate: function(event) {
+          switch (this.operator) {
+            case "+":
+              this.result = this.num1 + this.num2;
+              break;
+            case "-":
+              this.result = this.num1 - this.num2;
+              break;
+            case "*":
+              this.result = this.num1 * this.num2;
+              break;
+            case "/":
+              this.result = this.num1 / this.num2;
+              break;
+          }
+        }
+      }
+    });
+</script>
+</html>
