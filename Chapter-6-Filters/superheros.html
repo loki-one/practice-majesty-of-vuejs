@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>The Gotham Gazette</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Real identities of Super Heroes!</h1>
+    <ul class="list-group">
+      <li class='list-group-item' v-for="hero in heroes">
+        {{ hero | snitch }}
+      </li>
+    </ul>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    Vue.filter('snitch', function(hero){
+      return hero.secretId + ' is '
+          +  hero.firstname + ' '
+          +  hero.lastname + ' in real life!'
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        heroes: [
+          {
+            firstname: 'Bruce',
+            lastname: 'Wayne',
+            secretId: 'Batman'
+          },
+          {
+            firstname: 'Clark',
+            lastname: 'Kent',
+            secretId: 'Superman'
+          },
+          {
+            firstname: 'Jay',
+            lastname: 'Garrick',
+            secretId: 'Flash'
+          },
+          {
+            firstname: 'Peter',
+            lastname: 'Parker',
+            secretId: 'Spider-Man'
+          }
+        ]
+      }
+    });
+</script>
+</html>
