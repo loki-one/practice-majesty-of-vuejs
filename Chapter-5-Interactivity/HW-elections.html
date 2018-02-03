@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>The Elections</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Vote for your favourite Superhero</h1>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="(candidate, index) in candidates">
+        {{ candidate.name }} {{ candidate.votes }}<button class="btn" @click="upvote(index)">Vote</button>
+      </li>
+    </ul>
+    <input class="form-control" @keyup.delete="resetVotes" placeholder="press delete to reset votes">
+    <h1>Our current Favourite Superhero is: {{ favourite.name }}</h1>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        candidates: [
+          {
+            name: 'Batman',
+            votes: 150
+          },
+          {
+            name: 'Superman',
+            votes: 50
+          },
+          {
+            name: 'Flash',
+            votes: 80
+          },
+          {
+            name: 'Wolverine',
+            votes: 130
+          }
+        ]
+      },
+      methods: {
+        upvote: function (index) {
+          this.candidates[index].votes++;
+        },
+        resetVotes: function () {
+          this.candidates = this.candidates.map(function(item){
+              item.votes = 0;
+              return item;
+          });
+        }
+      },
+      computed: {
+        favourite: function() {
+          var sortedCandidates = this.candidates.sort(function(a,b){
+              return b.votes - a.votes;
+            });
+          return sortedCandidates[0];
+        }
+      }
+    });
+</script>
+</html>
