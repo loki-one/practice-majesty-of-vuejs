@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Handle Upvote using method!!!</title>
+</head>
+<body>
+  <div id="app" class="container text-center">
+    <button class="btn btn-primary" v-on:click="upvote">Upvote! {{ upvotes }}</button>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        upvotes: 0
+      },
+      methods: {
+        upvote: function(){
+          this.upvotes++;
+        }
+      }
+    });
+</script>
+</html>
