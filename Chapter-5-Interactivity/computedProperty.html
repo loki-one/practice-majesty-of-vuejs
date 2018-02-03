@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Computed Property</title>
+</head>
+<body>
+  <div id="app" class="container text-center">
+    a = {{ a }}, b = {{ b }}
+    <input class="form-control" v-model.number="a">
+    <pre>
+      {{ $data }}
+    </pre>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        a: 1
+      },
+      computed: {
+        b : function () {
+          return this.a + 1;
+        }
+      }
+    });
+</script>
+</html>
