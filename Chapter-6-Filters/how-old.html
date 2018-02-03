@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title></title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>People of Gaul</h1>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="person in peopleOrdered">
+        {{ person.name }} {{ person.age }}
+      </li>
+    </ul>
+    <h1>"Old" People of Gaul</h1>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="person in old">
+        {{ person.name }} {{ person.age }}
+      </li>
+    </ul>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        people: [{
+            name: 'Obelix',
+            age: 31
+          },
+          {
+            name: 'Asterix',
+            age: 32
+          },
+          {
+            name: 'Julius Caesar',
+            age: 56
+          },
+          {
+            name: 'Majestix',
+            age: 62
+          },
+          {
+            name: 'Arthur',
+            age: 68
+          },
+          {
+            name: 'Yvon',
+            age: 72
+          }
+        ]
+      },
+      computed: {
+        peopleOrdered: function() {
+          var peopleAscendingAge = this.people.sort(function(a, b){
+            return ((a.age - b.age) * -1);
+          });
+          return peopleAscendingAge;
+        },
+        old: function() {
+          var oldPeople = this.people.filter(function(person){
+            return person.age > 65;
+          });
+          return oldPeople;
+        }
+      }
+    });
+</script>
+</html>
