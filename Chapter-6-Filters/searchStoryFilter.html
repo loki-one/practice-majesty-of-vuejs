@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>User Stories</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Lets hear some stories!</h1>
+    <h3>Alex's stories</h3>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="story in storiesBy('Alex')">{{ story.writer }} said "{{ story.plot }}"</li>
+    </ul>
+    <h3>John's stories</h3>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="story in storiesBy('John')">{{ story.writer }} said "{{ story.plot }}"</li>
+    </ul>
+    <div class="form-group">
+      <label for="query">What are you looking for?</lable>
+      <input v-model="query" class="form-control">
+    </div>
+    <h3>Search results:</h3>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="story in search">
+        {{ story.writer }} said "{{ story.plot }}"
+      </li>
+    </ul>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      stories: [{
+          plot: 'I crashed my car today!',
+          writer: 'Alex'
+        },{
+          plot: 'Yesterday, someone stole my bag!',
+          writer: 'John'
+        },{
+          plot: 'Someone ate my chocolate...',
+          writer: 'John'
+        },{
+          plot: 'I ate someone\'s chocolate!',
+          writer: 'Alex'
+        }
+      ],
+      query: ''
+    },
+    methods: {
+      storiesBy: function (writer) {
+        var filteredStories = this.stories.filter(function(story){
+            return story.writer === writer;
+        });
+        return filteredStories;
+      }
+    },
+    computed: {
+      search: function () {
+        var query = this.query;
+        var searchedStories = this.stories.filter(function(story){
+          return story.plot.includes(query);
+        });
+        return searchedStories;
+      }
+    }
+  });
+</script>
+</html>
