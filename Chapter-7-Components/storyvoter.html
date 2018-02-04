@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- <link rel="stylesheet" href="../bootstrap.min.css"> -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <title>Stories</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Let's hear some stories!</h1>
+    <ul class="list-group">
+      <story v-for="(story, index) in stories" :each-story="story" :fav="favourite" :key="index"></story>
+    </ul>
+  </div>
+  <template id="story-template">
+    <li class="list-group-item">
+      {{ eachStory.writer }} said "{{ eachStory.plot }}".
+      Story upvotes {{ eachStory.upvotes }}.
+      <button v-show="!eachStory.voted" @click="upvote" class="btn btn-default">
+        Upvote
+      </button>
+      <button v-show="!isFavourite" @click="setFavourite" class="btn btn-primary">
+        Favourite
+      </button>
+      <span v-show="isFavourite" class="glyphicon glyphicon-star pull-right" aria-hidden="true"></span>
+    </li>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script>
+    Vue.component('story', {
+      props: ['eachStory', 'fav'],
+      template: '#story-template',
+      methods: {
+        upvote: function(){
+          this.eachStory.upvotes += 1;
+          this.eachStory.voted = true;
+        },
+        setFavourite: function(){
+          this.fav = this.eachStory;
+        }
+      },
+      computed: {
+        isFavourite: function(){
+          return this.eachStory == this.fav;
+        }
+      }
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        stories: [{
+          plot: 'My horse is amazing',
+          writer: 'Mr. Weebl',
+          upvotes: 28,
+          voted: false
+        },{
+          plot: 'Force is equal to mass into acceleration',
+          writer: 'Mr. Newton',
+          upvotes: 8,
+          voted: false
+        },{
+          plot: 'The dark side of the Force is stronger',
+          writer: 'Darth Vader',
+          upvotes: 49,
+          voted: false
+        },{
+          plot: 'One does not simply walk into Modor',
+          writer: 'Boromir',
+          upvotes: 74,
+          voted: false
+        }],
+        favourite: {}
+      }
+    });
+</script>
+</html>
