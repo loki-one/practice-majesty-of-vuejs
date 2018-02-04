@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Emit and Listen</title>
+</head>
+<body>
+  <div id="app" class="container text-center">
+    <p style="font-size: 140px;">
+      {{ votes }}
+    </p>
+    <button class="btn btn-primary" @click="vote">Vote</button>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        votes: 0
+      },
+      methods: {
+        vote: function () {
+          this.$emit('voted');
+        }
+      },
+      created () {
+        this.$on('voted', function(){
+          this.votes++;
+        });
+      }
+    });
+</script>
+</html>
