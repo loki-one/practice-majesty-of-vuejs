@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Hello Vue Component </title>
+</head>
+<body>
+  <div id="app" class="container">
+    <story></story>
+    <story></story>
+    <story></story>
+  </div>
+  <template id="story-template">
+    <h1>My horse is cool!</h1>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script>
+    Vue.component('story',{
+      template: '#story-template'
+    });
+    new Vue({
+      el: '#app'
+    });
+</script>
+</html>
