@@ -10,8 +10,9 @@
   <div id="app" class="container">
     <h1>Let's hear some stories!</h1>
     <ul class="list-group">
-      <story v-for="(story, index) in stories" :each-story="story" :fav="favourite" :key="index"></story>
+      <story v-for="(story, index) in stories" :each-story="story" :fav="favourite" :key="index" @update="updateFavourite"></story>
     </ul>
+    <pre>{{ $data }}</pre>
   </div>
   <template id="story-template">
     <li class="list-group-item">
@@ -38,7 +39,8 @@
           this.eachStory.voted = true;
         },
         setFavourite: function(){
-          this.fav = this.eachStory;
+          //this.fav = this.eachStory;
+          this.$emit('update', this.eachStory);
         }
       },
       computed: {
@@ -73,6 +75,11 @@
           voted: false
         }],
         favourite: {}
+      },
+      methods: {
+        updateFavourite: function(story){
+          this.favourite = story;
+        }
       }
     });
 </script>
