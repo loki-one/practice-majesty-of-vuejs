@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Food Battle With Log</title>
+</head>
+<body>
+  <div id="app" class="container text-center">
+    <p style="font-size:140px;">
+      {{ votes }}
+    </p>
+    <div class="row">
+      <food @voted="countVote" name="Cheeseburger"></food>
+      <food @voted="countVote" name="Double Bacon Burger"></food>
+      <food @voted="countVote" name="Rodeo Burger"></food>
+    </div>
+    <h1>Log:</h1>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="vote in log">{{ vote }}</li>
+    </ul>
+  </div>
+  <template id="food-template">
+    <div class="text-center col-lg-4">
+      <p style="font-size:40px;">
+        {{ votes }}
+      </p>
+      <button class="btn btn-default" @click="vote">{{ name }}</button>
+    </div>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script>
+    var bus = new Vue();
+
+    Vue.component('food',{
+      template: '#food-template',
+      props: ['name'],
+      data: function () {
+        return {
+          votes: 0
+        }
+      },
+      methods: {
+        vote: function(event){
+          this.votes++;
+          this.$emit('voted', event.srcElement.textContent);
+        }
+      }
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        votes: 0,
+        log: []
+      },
+      methods: {
+        countVote: function (food) {
+          this.votes++;
+          this.log.push(food + ' received a vote ');
+        }
+      }
+    });
+</script>
+</html>
