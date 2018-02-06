@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Horse-drawn Chariots</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1 style="font-size:60px;">Chariot Shopping</h1>
+    <ul class='list-group'>
+      <chariot v-for="(horseChariot, index) in horseChariots" :each-horse-chariot="horseChariot" :key="index"></chariot>
+    </ul>
+  </div>
+  <template id="chariot-template">
+    <li class="list-group-item" style="font-size:20px;font-weight:600;">
+      "{{ eachHorseChariot.name }}" chariot has {{ eachHorseChariot.count }} horse(s)!<br>
+      <button class="btn btn-primary"></button>
+    </li>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script>
+    Vue.component('chariot', {
+      template: '#chariot-template',
+      props: ['eachHorseChariot']
+    })
+
+    new Vue({
+      el: '#app',
+      data: {
+        horseChariots: [{
+          name: 'Olympus',
+          count: 4
+        },{
+          name: 'Sagitta',
+          count: 3
+        },{
+          name: 'Icarus',
+          count: 2
+        },{
+          name: 'Abraxas',
+          count: 1
+        }]
+      }
+    });
+</script>
+</html>
