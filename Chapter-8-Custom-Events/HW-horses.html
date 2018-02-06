@@ -9,13 +9,14 @@
   <div id="app" class="container">
     <h1 style="font-size:60px;">Chariot Shopping</h1>
     <ul class='list-group'>
-      <chariot v-for="(horseChariot, index) in horseChariots" :each-horse-chariot="horseChariot" :key="index"></chariot>
+      <chariot v-for="(horseChariot, index) in horseChariots" :each-horse-chariot="horseChariot" :current="currentChariot" :key="index" @update="updateCurrentChariot"></chariot>
     </ul>
+    <!-- <pre>{{ $data }}</pre> -->
   </div>
   <template id="chariot-template">
     <li class="list-group-item" style="font-size:20px;font-weight:600;">
       "{{ eachHorseChariot.name }}" chariot has {{ eachHorseChariot.count }} horse(s)!<br>
-      <button class="btn btn-primary"></button>
+      <button class="btn btn-primary" @click="setCurrentChariot" :disabled="isCurrentChariot">{{ action }}</button>
     </li>
   </template>
 </body>
@@ -23,8 +24,36 @@
 <script>
     Vue.component('chariot', {
       template: '#chariot-template',
-      props: ['eachHorseChariot']
-    })
+      props: ['eachHorseChariot', 'current'],
+      methods: {
+        setCurrentChariot: function () {
+          this.$emit('update', this.eachHorseChariot);
+        }
+      },
+      computed: {
+        noChariotSelected: function () {
+          return this.current.name == null;
+        },
+        isCurrentChariot: function () {
+          return this.current.name == this.eachHorseChariot.name;
+        },
+        hasMoreHorseCount: function () {
+          return this.current.count < this.eachHorseChariot.count;
+        },
+        action: function () {
+            if (this.noChariotSelected) {
+              action = 'Pick Chariot';
+            } else if (this.isCurrentChariot) {
+              action = 'Riding!';
+            } else if (this.hasMoreHorseCount) {
+              action = 'Hire Horses';
+            } else {
+              action = 'Dismiss Horses';
+            }
+            return action;
+          }
+        }
+    });
 
     new Vue({
       el: '#app',
@@ -41,7 +70,13 @@
         },{
           name: 'Abraxas',
           count: 1
-        }]
+        }],
+        currentChariot: {}
+      },
+      methods: {
+        updateCurrentChariot: function (chariot) {
+          this.currentChariot = chariot;
+        }
       }
     });
 </script>
