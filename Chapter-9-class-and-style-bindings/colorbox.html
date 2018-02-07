@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Hello Colors</title>
+</head>
+<body>
+  <div id="app" class="container-fluid text-center">
+    <div class="box" :class="{ 'red': color, 'blue': !color }"></div>
+    <div class="box" :class="{ 'purple': color, 'green': !color }"></div>
+    <div class="box" :class="{ 'red': color, 'blue': !color }"></div>
+    <div class="box" :class="{ 'purple': color, 'green': !color }"></div>
+    <button class="btn btn-block btn-success" @click="flipColor">
+      Flip color!
+    </button>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        color: true
+      },
+      methods: {
+        flipColor: function () {
+          this.color = !this.color;
+        }
+      }
+    });
+</script>
+<style type="text/css">
+  .red {
+    background: #ff0000;
+  }
+  .blue {
+    background: #0000ff;
+  }
+  .green {
+    background: #4CAF50;
+  }
+  .purple {
+    background: #7B1FA2;
+  }
+  .box {
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin: 40px;
+    border: 1px solid rgba(0,0,0,.2);
+  }
+</style>
+</html>
