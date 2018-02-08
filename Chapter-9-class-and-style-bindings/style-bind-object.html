@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Style binding using Object syntax</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <div :style="niceStyle">I have a style binding with an Object syntax!!!</div>
+    <div :style="{'color': badStyle.color, 'fontStyle': badStyle.fontStyle}">I have a style binding too!!!</div>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        niceStyle: {
+          color: 'blue',
+          fontSize: '60px',
+          fontWeight: 700
+        },
+        badStyle: {
+          color: 'red',
+          fontSize: '60px',
+          fontStyle: 'italic'
+        }
+      }
+    });
+</script>
+</html>
