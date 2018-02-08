@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Stories</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Let's hear some stories!</h1>
+    <table class="table table-stripped">
+      <tr>
+        <th>#</th>
+        <th>Plot</th>
+        <th>Writer</th>
+        <th>Upvotes</th>
+        <th>Actions</th>
+      </tr>
+      <tr v-for="(story, index) in stories" :each-story="story" :key="index" is="story"></tr>
+    </table>
+  </div>
+  <template id="story-template">
+    <tr>
+      <td>{{ eachStory.id }}</td>
+      <td><span>{{ eachStory.plot }}</span></td>
+      <td><span>{{ eachStory.writer }}</span></td>
+      <td><span>{{ eachStory.upvotes }}</span></td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-primary" @click="upvoteStory(eachStory)">Upvote</button>
+          <button class="btn btn-danger" @click="deleteStory(eachStory)">Delete</button>
+        </div>
+      </td>
+    </tr>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+    Vue.component('story', {
+      template: '#story-template',
+      props: ['eachStory'],
+      methods: {
+        upvoteStory: function(eachStory) {
+          eachStory.upvotes++;
+          $.ajax({
+            url:'http://localhost:3000/api/stories/' + eachStory.id,
+            type: 'PATCH',
+            data: eachStory
+          });
+        },
+        deleteStory: function(eachStory) {
+          var index = vm.stories.indexOf(eachStory);
+          vm.stories.splice(index, 1);
+
+          $.ajax({
+            url: 'http://localhost:3000/api/stories/' + eachStory.id,
+            type: 'DELETE'
+          });
+        }
+      }
+    });
+
+var vm = new Vue({
+          el: '#app',
+          data: {
+            stories: []
+          },
+          mounted: function() {
+            $.get('http://localhost:3000/api/stories', function (data) {
+                vm.stories = data;
+            });
+          }
+        });
+</script>
+</html>
