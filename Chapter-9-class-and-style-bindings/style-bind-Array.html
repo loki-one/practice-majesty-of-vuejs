@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Style binding using Array syntax</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <div :style="[niceStyle, badStyle]">I have a style binding with an Array syntax using multiple style!!!</div>
+  </div>
+</body>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: {
+        niceStyle: {
+          color: 'blue',
+          fontSize: '60px',
+          fontWeight: 700
+        },
+        badStyle: {
+          fontStyle: 'italic'
+        }
+      }
+    });
+</script>
+</html>
