@@ -2,7 +2,7 @@
 Examples and Homework included in the majesty of Vue.js 2 book
 
 
-#Chapter 10 Apis Setup
+# Chapter 10 Apis Setup
 You need php and composer follow below link for installation
 http://kizu514.com/blog/install-php7-and-composer-on-windows-10/
 
@@ -12,3 +12,9 @@ http://kizu514.com/blog/install-php7-and-composer-on-windows-10/
 2) Install Composer from https://getcomposer.org/download/
 5) for sqlite uncomment extension = php_pdo_sqlite.dll from line 913
 6) Then run the sh setup.sh command from stories directory
+
+# Chapter 11 To avoid cors add below to index.php in stories/public directory
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PATCH, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");

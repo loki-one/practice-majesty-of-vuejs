@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Stories</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Let's hear some stories!</h1>
+    <ul class="list-group">
+      <story v-for="(story, index) in stories" :key="index" :each-story="story"></story>
+    </ul>
+  </div>
+  <template id="story-template">
+    <li class="list-group-item">
+      {{ eachStory.writer }} said "{{ eachStory.plot }}"
+      <span>{{ eachStory.upvotes }}</span>
+    </li>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+    Vue.component('story', {
+      template: '#story-template',
+      props: ['eachStory']
+    });
+
+var vm = new Vue({
+          el: '#app',
+          data: {
+            stories: []
+          },
+          mounted: function() {
+            $.get('http://localhost:3000/api/stories', function (data) {
+                vm.stories = data;
+            });
+          }
+        });
+</script>
+</html>
