@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Todo</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <ul>
+      <todo v-for="(task, index) in tasks" :each-task="task" :key="index" :class="[task.done ? 'completed' : '']"></todo>
+    </ul>
+    <pre>{{ $data }}</pre>
+  </div>
+  <template id="todo-template">
+    <li :style="styleObject">
+      {{ eachTask.body }}
+      <button class="btn btn-success" @click='completeTask'>
+          Just do it!
+      </button>
+    </li>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script>
+    Vue.component('todo', {
+      props: ['eachTask'],
+      template: '#todo-template',
+      data: function () {
+        return {
+          styleObject: {
+            fontSize: '25px'
+          }
+        }
+      },
+      methods: {
+        completeTask: function () {
+          this.eachTask.done = !this.eachTask.done;
+        }
+      }
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        tasks: [
+          {body: 'Feed the horses', done: true},
+          {body: 'Wash armour', done: true},
+          {body: 'Sharp sword', done: false}
+        ]
+      }
+    });
+</script>
+<style type="text/css">
+    .completed {
+      text-decoration: line-through;
+    }
+</style>
+</html>
