@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Stories</title>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Let's hear some stories!</h1>
+    <table class="table table-stripped">
+      <tr>
+        <th>#</th>
+        <th>Plot</th>
+        <th>Writer</th>
+        <th>Upvotes</th>
+        <th>Actions</th>
+      </tr>
+      <tr v-for="(story, index) in stories" :each-story="story" :key="index" is="story"></tr>
+    </table>
+  </div>
+  <template id="story-template">
+    <tr>
+      <td>{{ eachStory.id }}</td>
+      <td>
+        <input v-if="eachStory.editing" v-model="eachStory.plot" class="form-control"></input>
+        <span v-else>{{ eachStory.plot }}</span>
+      </td>
+      <td>
+        <input v-if="eachStory.editing" v-model="eachStory.writer" class="form-control"></input>
+        <span v-else>{{ eachStory.writer }}</span>
+      </td>
+      <td><span>{{ eachStory.upvotes }}</span></td>
+      <td>
+        <div v-if="!eachStory.editing" class="btn-group">
+          <button class="btn btn-primary" @click="upvoteStory(eachStory)">Upvote</button>
+          <button class="btn btn-default" @click="editStory(eachStory)">Edit</button>
+          <button class="btn btn-danger" @click="deleteStory(eachStory)">Delete</button>
+        </div>
+        <div class="btn-group" v-else>
+          <button class="btn btn-primary" @click="updateStory(eachStory)">Update Story</button>
+          <button class="btn btn-default" @click="eachStory.editing=false">Cancel</button>
+        </div>
+      </td>
+    </tr>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    Vue.component('story', {
+      template: '#story-template',
+      props: ['eachStory'],
+      methods: {
+        upvoteStory: function(eachStory) {
+          eachStory.upvotes++;
+          axios.patch('http://localhost:3000/api/stories/' + eachStory.id, eachStory);
+        },
+        deleteStory: function(eachStory) {
+          //var index = vm.stories.indexOf(eachStory);
+          var index = this.$parent.stories.indexOf(eachStory);
+          //vm.stories.splice(index, 1);
+          this.$parent.stories.splice(index, 1);
+          axios.delete('http://localhost:3000/api/stories/' + eachStory.id);
+        },
+        editStory: function(eachStory) {
+          eachStory.editing = true;
+        },
+        updateStory: function(eachStory) {
+          axios.patch('http://localhost:3000/api/stories/' + eachStory.id, eachStory);
+          eachStory.editing = false;
+        }
+      }
+    });
+
+var vm = new Vue({
+          el: '#app',
+          data: {
+            stories: []
+          },
+          mounted: function() {
+            axios.get('http://localhost:3000/api/stories').then(function(response){
+              //Vue.set(vm, 'stories, response.data'); //gives a warning of not adding data to instance during runtime
+              //vm.stories = response.data;
+              var storiesReady = response.data.map(function(story){
+                story.editing = false;
+                return story;
+              });
+               vm.stories = storiesReady;
+            });
+          }
+        });
+</script>
+</html>
