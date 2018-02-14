@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../bootstrap.min.css">
+  <title>Movies</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>movies</h1>
+      <table class="table table-striped">
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Director</th>
+          <th>Actions</th>
+        </tr>
+        <tr v-for="(movie, index) in movies" is="movie" :each-movie="movie" :key="index"></tr>
+      </table>
+    </div>
+  </div>
+  <template id="movie-template">
+    <tr>
+      <td>
+        {{ eachMovie.id }}
+      </td>
+      <td>
+        <span>
+          {{ eachMovie.title }}
+        </span>
+      </td>
+      <td>
+        <span>
+          {{ eachMovie.director }}
+        </span>
+      </td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-default">Edit</button>
+          <button @click="deleteMovie(eachMovie)" class="btn btn-danger">Delete</button>
+        </div>
+      </td>
+    </tr>
+  </template>
+</body>
+<script src="../vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    Vue.component('movie', {
+      template: '#movie-template',
+      props: ['eachMovie'],
+      methods: {
+        deleteMovie: function (eachMovie) {
+          var index = this.$parent.movies.indexOf(eachMovie);
+          this.$parent.movies.splice(index, 1);
+          axios.delete('http://localhost:3000/api/movies/' + eachMovie.id);
+        }
+      }
+    });
+
+    var vm =new Vue({
+              el: '#app',
+              data: {
+                movies: []
+              },
+              methods: {
+                fetchMovies: function () {
+                  axios.get('http://localhost:3000/api/movies').then(function(response){
+                    vm.movies = response.data;
+                  });
+                }
+              },
+              mounted: function() {
+                this.fetchMovies();
+              }
+            });
+</script>
+</html>
