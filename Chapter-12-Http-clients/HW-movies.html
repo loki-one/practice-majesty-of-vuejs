@@ -26,19 +26,25 @@
         {{ eachMovie.id }}
       </td>
       <td>
-        <span>
+        <input v-if="eachMovie.editing" v-model="eachMovie.title" class="form-control"></input>
+        <span v-else>
           {{ eachMovie.title }}
         </span>
       </td>
       <td>
-        <span>
+        <input v-if="eachMovie.editing" v-model="eachMovie.director" class="form-control"></input>
+        <span v-else>
           {{ eachMovie.director }}
         </span>
       </td>
       <td>
-        <div class="btn-group">
-          <button class="btn btn-default">Edit</button>
+        <div v-if="!eachMovie.editing" class="btn-group">
+          <button @click="editMovie(eachMovie)" class="btn btn-default">Edit</button>
           <button @click="deleteMovie(eachMovie)" class="btn btn-danger">Delete</button>
+        </div>
+        <div v-else class="btn-group">
+          <button @click="updateMovie(eachMovie)" class="btn btn-primary">Update</button>
+          <button @click="eachMovie.editing=false" class="btn btn-default">Cancel</button>
         </div>
       </td>
     </tr>
@@ -55,6 +61,13 @@
           var index = this.$parent.movies.indexOf(eachMovie);
           this.$parent.movies.splice(index, 1);
           axios.delete('http://localhost:3000/api/movies/' + eachMovie.id);
+        },
+        editMovie: function (eachMovie) {
+          eachMovie.editing = true;
+        },
+        updateMovie: function (eachMovie) {
+          axios.patch('http://localhost:3000/api/movies/' + eachMovie.id, eachMovie)
+          eachMovie.editing = false;
         }
       }
     });
@@ -67,7 +80,11 @@
               methods: {
                 fetchMovies: function () {
                   axios.get('http://localhost:3000/api/movies').then(function(response){
-                    vm.movies = response.data;
+                    var moviesReady = response.data.map(function(movie){
+                      movie.editing = false;
+                      return movie
+                    });
+                    vm.movies = moviesReady;
                   });
                 }
               },
