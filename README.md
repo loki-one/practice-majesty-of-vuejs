@@ -19,3 +19,6 @@ http://kizu514.com/blog/install-php7-and-composer-on-windows-10/
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PATCH, DELETE");
 header("Access-Control-Allow-Headers: Content-Type");
+
+# Chapter 14 Enabling ES6 features on chrome
+chrome://flags => Enable Experimental JavaScript
