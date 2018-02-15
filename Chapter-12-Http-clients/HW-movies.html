@@ -18,6 +18,11 @@
         </tr>
         <tr v-for="(movie, index) in movies" is="movie" :each-movie="movie" :key="index"></tr>
       </table>
+      <p class="lead">Here's a list of all your movies.
+        <button @click="createMovie()" class="btn btn-primary">
+          Add a new one?
+        </button>
+      </p>
     </div>
   </div>
   <template id="movie-template">
@@ -43,7 +48,8 @@
           <button @click="deleteMovie(eachMovie)" class="btn btn-danger">Delete</button>
         </div>
         <div v-else class="btn-group">
-          <button @click="updateMovie(eachMovie)" class="btn btn-primary">Update</button>
+          <button v-if="eachMovie.id" @click="updateMovie(eachMovie)" class="btn btn-primary">Update</button>
+          <button v-else @click="storeMovie(eachMovie)" class="btn btn-success">Save New Movie</button>
           <button @click="eachMovie.editing=false" class="btn btn-default">Cancel</button>
         </div>
       </td>
@@ -68,6 +74,13 @@
         updateMovie: function (eachMovie) {
           axios.patch('http://localhost:3000/api/movies/' + eachMovie.id, eachMovie)
           eachMovie.editing = false;
+        },
+        storeMovie: function (eachMovie) {
+          axios.post('http://localhost:3000/api/movies/', eachMovie).then(function(response){
+            //vm.fetchMovies();
+            Vue.set(eachMovie, 'id', response.data.id);
+            eachMovie.editing = false;
+          });
         }
       }
     });
@@ -86,6 +99,14 @@
                     });
                     vm.movies = moviesReady;
                   });
+                },
+                createMovie: function () {
+                  var newMovie = {
+                    "title": "",
+                    "director": "",
+                    "editing": true
+                  };
+                  this.movies.push(newMovie);
                 }
               },
               mounted: function() {
