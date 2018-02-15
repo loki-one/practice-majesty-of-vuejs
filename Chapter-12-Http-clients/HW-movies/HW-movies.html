@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../bootstrap.min.css">
+  <title>Movies</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>movies</h1>
+      <table class="table table-striped">
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Director</th>
+          <th>Actions</th>
+        </tr>
+        <tr v-for="(movie, index) in movies" is="movie" :each-movie="movie" :key="index"></tr>
+      </table>
+      <p class="lead">Here's a list of all your movies.
+        <button @click="createMovie()" class="btn btn-primary">
+          Add a new one?
+        </button>
+      </p>
+    </div>
+  </div>
+  <template id="movie-template">
+    <tr>
+      <td>
+        {{ eachMovie.id }}
+      </td>
+      <td>
+        <input v-if="eachMovie.editing" v-model="eachMovie.title" class="form-control"></input>
+        <span v-else>
+          {{ eachMovie.title }}
+        </span>
+      </td>
+      <td>
+        <input v-if="eachMovie.editing" v-model="eachMovie.director" class="form-control"></input>
+        <span v-else>
+          {{ eachMovie.director }}
+        </span>
+      </td>
+      <td>
+        <div v-if="!eachMovie.editing" class="btn-group">
+          <button @click="editMovie(eachMovie)" class="btn btn-default">Edit</button>
+          <button @click="deleteMovie(eachMovie)" class="btn btn-danger">Delete</button>
+        </div>
+        <div v-else class="btn-group">
+          <button v-if="eachMovie.id" @click="updateMovie(eachMovie)" class="btn btn-primary">Update</button>
+          <button v-else @click="storeMovie(eachMovie)" class="btn btn-success">Save New Movie</button>
+          <button @click="eachMovie.editing=false" class="btn btn-default">Cancel</button>
+        </div>
+      </td>
+    </tr>
+  </template>
+</body>
+<script src="../../vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/movies.js"></script>
+</html>
