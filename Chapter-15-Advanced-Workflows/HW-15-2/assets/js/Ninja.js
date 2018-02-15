@@ -21,4 +21,4 @@ var Ninja = function () {
   return Ninja;
 }();
 
-new Ninja('Leonardo').announce();
+new Ninja('Leo').announce();

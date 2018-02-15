@@ -10,4 +10,4 @@ class Ninja {
 
 }
 
-new Ninja('Leonardo').announce();
+new Ninja('Leo').announce();
