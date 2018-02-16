@@ -2,18 +2,21 @@
   <div id="app">
     <img src="./assets/logo.png">
     <!-- <HelloWorld/> -->
-    <login></login>
+    <!-- <login></login> -->
+    <register></register>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld'
-import Login from './components/Login'
+// import Login from './components/Login'
+import Register from './components/Register'
 
 export default {
   name: 'App',
   components: {
-    Login
+    // Login,
+    Register
   // HelloWorld
   }
 }
