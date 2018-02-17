@@ -3,20 +3,23 @@
     <img src="./assets/logo.png">
     <!-- <HelloWorld/> -->
     <!-- <login></login> -->
-    <register></register>
+    <!-- <register></register> -->
+    <stories></stories>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld'
 // import Login from './components/Login'
-import Register from './components/Register'
+// import Register from './components/Register'
+import Stories from './components/Stories'
 
 export default {
   name: 'App',
   components: {
     // Login,
-    Register
+    // Register,
+    Stories
   // HelloWorld
   }
 }
