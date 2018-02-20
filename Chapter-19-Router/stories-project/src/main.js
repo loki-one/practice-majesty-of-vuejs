@@ -3,8 +3,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
-import Hello from '../src/components/HelloWorld.vue'
-import Login from '../src/components/Login.vue'
+import Hello from './components/HelloWorld.vue'
+import Login from './components/Login.vue'
+import StoriesPage from './components/StoriesPage.vue'
+import StoriesAll from './components/StoriesAll.vue'
+import StoriesFamous from './components/StoriesFamous.vue'
 
 Vue.config.productionTip = false
 
@@ -20,6 +23,22 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/stories',
+    component: StoriesPage,
+    children: [
+      {
+        path: '',
+        name: 'stories.all',
+        component: StoriesAll
+      },
+      {
+        path: 'famous',
+        name: 'stories.famous',
+        component: StoriesFamous
+      }
+    ]
   }
 ]
 
