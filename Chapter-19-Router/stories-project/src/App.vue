@@ -2,8 +2,8 @@
   <div id="app" class="container">
     <img src="./assets/logo.png">
     <h1>Welcome to Routing!</h1>
-    <router-link to="/">Home</router-link>
-    <router-link to="/login">Login</router-link>
+    <router-link :to="{ name: 'home'}">Home</router-link>
+    <router-link :to="{ name: 'login'}">Login</router-link>
     <router-view></router-view>
   </div>
 </template>
