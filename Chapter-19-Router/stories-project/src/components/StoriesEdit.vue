@@ -9,6 +9,9 @@
         <button @click="saveChanges(story)" class="btn btn-success">
           Save Changes
         </button>
+        <button @click="goBack" class="btn btn-success">
+          Go Back
+        </button>
       </div>
     </form>
   </div>
@@ -30,6 +33,9 @@ export default {
     },
     saveChanges: function (story) {
 
+    },
+    goBack: function () {
+      this.$router.push('/stories')
     }
   },
   mounted: function () {

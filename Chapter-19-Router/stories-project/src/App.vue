@@ -5,7 +5,9 @@
     <router-link :to="{ name: 'home'}" exact>Home</router-link>
     <router-link :to="{ name: 'login'}">Login</router-link>
     <router-link :to="{ name: 'stories.all'}">Stories</router-link>
-    <router-view></router-view>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -29,5 +31,15 @@ export default {
 
 .router-link-active {
   color: green;
+}
+
+.fade-enter {
+opacity: 0
+}
+.fade-enter-active {
+transition: opacity 1s
+}
+.fade-enter-to {
+opacity: 0.8
 }
 </style>
